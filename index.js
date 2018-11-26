@@ -8,6 +8,7 @@ const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
 
 // Routers
+const userRouter = require('./routes/user.router');
 
 // Passport
 const passport = require('passport');
@@ -32,6 +33,9 @@ app.use(
 
 // Body parser
 app.use(express.json());
+
+// Mount routers
+app.use('/users', userRouter);
 
 function runServer(port = PORT) {
   const server = app
