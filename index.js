@@ -9,11 +9,15 @@ const { dbConnect } = require('./db-mongoose');
 
 // Routers
 const userRouter = require('./routes/user.router');
+const authRouter = require('./routes/auth.router');
 
 // Passport
 const passport = require('passport');
 const localStrategy = require('./passport/local');
 const jwtStrategy = require('./passport/jwt');
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 const app = express();
 
@@ -36,6 +40,7 @@ app.use(express.json());
 
 // Mount routers
 app.use('/users', userRouter);
+app.use('/auth', authRouter);
 
 function runServer(port = PORT) {
   const server = app
