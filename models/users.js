@@ -3,15 +3,22 @@ const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  questions: [
+    {
+      question: { type: mongoose.Schema.Types.ObjectId, ref: 'Question' },
+      next: { type: Number }
+    }
+  ],
+  head: { type: Number, default: 0 },
+  tail: { type: Number, default: 4 }
 });
 
 userSchema.set('toObject', {
   virtuals: true,
   versionKey: false,
-  transform: (doc, ret) => {
-    delete ret._id;
-    delete ret.password;
+  transform: (doc, result) => {
+    delete result._id, delete result.__v, delete result.password;
   }
 });
 

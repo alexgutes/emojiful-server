@@ -59,3 +59,11 @@ if (require.main === module) {
 }
 
 module.exports = { app };
+
+// Me
+// User Story: As a logged in user, I am presented with a word so that I can learn the meaning of the word
+// User Story: As a user, I am given feedback to my answer so that I learn the word
+
+// Alex
+// User Story: As a user, when I am using the app, my progress should be recorded so I know which questions I got correct or wrong
+// User Story: As a user, when I am using the app, I should be able to move to the next word so I can learn more words

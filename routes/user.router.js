@@ -4,15 +4,17 @@ const router = express.Router();
 
 // Models
 const User = require('../models/users');
+const Question = require('../models/questions');
 
 router.get('/', (req, res, next) => {
   User.find()
-    // .populate('questions')
+    .populate('questions')
     .then(users => res.json(users))
     .catch(error => next(error));
 });
 
 router.post('/', (req, res, next) => {
+  console.log('hitting');
   // Extract username and password from the body
   const { username, password } = req.body;
 
@@ -62,8 +64,19 @@ router.post('/', (req, res, next) => {
     });
   }
 
-  // TODO: Add questions to this
-  return User.hashPassword(password)
+  let resolvedQuestions;
+
+  return Question.find()
+    .then(questions => {
+      resolvedQuestions = questions.map((question, index) => ({
+        question,
+        next: index === questions.length - 1 ? null : index + 1
+      }));
+      return;
+    })
+    .then(() => {
+      return User.hashPassword(password);
+    })
     .then(digest => {
       return User.create({
         username,
@@ -71,10 +84,18 @@ router.post('/', (req, res, next) => {
       });
     })
     .then(user => {
+      user.questions = resolvedQuestions;
       return user.save();
     })
     .then(user => {
-      const returnUser = { username: user.username, id: user.id };
+      console.log(user);
+      const returnUser = {
+        head: user.head,
+        tail: user.tail,
+        username: user.username,
+        questions: user.questions
+      };
+
       res
         .status(201)
         .location(`/users/${user.id}`)
