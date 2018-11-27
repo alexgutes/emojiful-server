@@ -1,22 +1,42 @@
 [
   {
-    "emoji": "grimacing",
+    "emoji": "😬",
     "description": "grimacing"
   },
   {
-    "emoji": "thinking",
+    "emoji": "🤔",
     "description": "thinking"
   },
   {
-    "emoji": "expresssionless",
+    "emoji": "😑",
     "description": "expressionless"
   },
   {
-    "emoji": "laughing",
+    "emoji": "😂",
     "description": "laughing"
   },
   {
-    "emoji": "chocolate",
+    "emoji": "🍫",
     "description": "chocolate bar"
+  },
+  {
+    "emoji": "🐈",
+    "description": "cat"
+  },
+  {
+    "emoji": "🐱",
+    "description": "cat face"
+  },
+  {
+    "emoji": "🌈",
+    "description": "rainbow"
+  },
+  {
+    "emoji": "❤️",
+    "description": "heart"
+  },
+  {
+    "emoji": "🎈",
+    "description": "balloon"
   }
 ]

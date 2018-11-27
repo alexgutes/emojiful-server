@@ -14,7 +14,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  console.log('hitting');
   // Extract username and password from the body
   const { username, password } = req.body;
 
@@ -80,36 +79,33 @@ router.post('/', (req, res, next) => {
     .then(digest => {
       return User.create({
         username,
-        password: digest
+        password: digest,
+        questions: resolvedQuestions
       });
     })
     .then(user => {
-      user.questions = resolvedQuestions;
-      return user.save();
-    })
-    .then(user => {
-      console.log(user);
-      const returnUser = {
+      const newUser = {
         head: user.head,
         tail: user.tail,
+        id: user._id,
         username: user.username,
         questions: user.questions
       };
 
       res
         .status(201)
-        .location(`/users/${user.id}`)
-        .json(returnUser);
+        .location(`/users/${newUser.id}`)
+        .json(newUser);
     })
-    .catch(error => {
-      if (error.code === 11000) {
+    .catch(err => {
+      if (err.code === 11000) {
         return res.status(400).json({
-          reason: 'Validation error',
+          reason: 'Validation Error',
           message: 'The username already exists',
           location: 'username'
         });
       }
-      next(error);
+      next(err);
     });
 });
 
